@@ -1,2 +1,2 @@
 # adminer-show-table-row
-Adminer plugin
+Adds posibility to show table row from table select page
