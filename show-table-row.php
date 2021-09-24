@@ -16,7 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <?php
-        } if (isset($_GET["show"])) {
+        }
+        if (isset($_GET["show"])) {
             ?>
 <script <?php echo nonce(); ?>>
 document.addEventListener('DOMContentLoaded', function() {
@@ -27,6 +28,40 @@ document.addEventListener('DOMContentLoaded', function() {
   var h2 = document.querySelector('div#content h2');
   if (h2) {
     h2.innerHTML = h2.innerHTML.replace('<?php echo lang('Edit'); ?>', '<?php echo lang('Show'); ?>');
+  }
+});
+</script>
+<?php
+        }
+        if (isset($_GET["edit"])) {
+?>
+<script <?php echo nonce(); ?>>
+document.addEventListener('DOMContentLoaded', function() {
+  var params = [];
+  document.querySelectorAll('div#content table tr th:nth-child(1)').forEach(function(th) {
+      params.push(th.innerText);
+  });
+  var tr1 = document.querySelector('div#content table tr:nth-child(1)');
+  for(let [param, value] of new URLSearchParams(location.search)){
+    if (param.match(/^where/)) {
+      param = param.replace('where[', '').replace(']', '');
+      console.log(params.includes(param));
+      if (!params.includes(param)) {
+        var tr = document.createElement('tr');
+<?php
+        if (isset($_GET["show"])) {
+?>
+            tr.innerHTML = "<th>" + param + "</th><td>" + value + "</td>";
+<?php
+        } else {
+?>
+            tr.innerHTML = "<th>" + param + "</th><td></td><td>" + value + "</td>";
+<?php
+        }
+?>
+        tr1.parentNode.insertBefore(tr, tr1);
+      }
+    }
   }
 });
 </script>
@@ -58,7 +93,6 @@ document.addEventListener('DOMContentLoaded', function() {
             $back = lang('Back');
             echo '<a href="' . $referer . '">' . $back . '</a>';
         }
-
         echo "<table cellspacing='0' class='layout'>";
         $driver = $this->driver();
         foreach ($row as $key => $val) {
@@ -71,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         echo "</table>";
 
-        $checks = [];
+        $checks = array();
         foreach (explode('&', $_SERVER['QUERY_STRING']) as $query) {
             if (preg_match('/^where%5B.+%5D=/', $query)) {
                 $checks[] = $query;
