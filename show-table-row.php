@@ -4,13 +4,13 @@ class AdminerShowTableRow {
     function head() {
         if (isset($_GET["select"])) {
             ?>
-<script <?php echo nonce(); ?>>
+<script <?php echo Adminer\nonce(); ?>>
 document.addEventListener('DOMContentLoaded', function() {
   var table = document.querySelector('table#table');
   table.querySelectorAll('tbody tr td:first-child').forEach(function(td) {
     var a = td.querySelector('a.edit');
     if (a) {
-      td.innerHTML += ' <a href="' + a.href + '&show=1"><?php echo lang('Show'); ?></a>';
+      td.innerHTML += ' <a href="' + a.href + '&show=1"><?php echo Adminer\lang('Show'); ?></a>';
     }
   });
 });
@@ -19,15 +19,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if (isset($_GET["show"])) {
             ?>
-<script <?php echo nonce(); ?>>
+<script <?php echo Adminer\nonce(); ?>>
 document.addEventListener('DOMContentLoaded', function() {
   var p = document.querySelector('p#breadcrumb');
   if (p) {
-            p.innerHTML = p.innerHTML.replace(/<?php echo lang('Edit'); ?>\s*$/, '<?php echo lang('Show'); ?>');
+            p.innerHTML = p.innerHTML.replace(/<?php echo Adminer\lang('Edit'); ?>\s*$/, '<?php echo Adminer\lang('Show'); ?>');
   }
   var h2 = document.querySelector('div#content h2');
   if (h2) {
-    h2.innerHTML = h2.innerHTML.replace('<?php echo lang('Edit'); ?>', '<?php echo lang('Show'); ?>');
+    h2.innerHTML = h2.innerHTML.replace('<?php echo Adminer\lang('Edit'); ?>', '<?php echo Adminer\lang('Show'); ?>');
   }
 });
 </script>
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if (isset($_GET["edit"])) {
 ?>
-<script <?php echo nonce(); ?>>
+<script <?php echo Adminer\nonce(); ?>>
 document.addEventListener('DOMContentLoaded', function() {
   var params = [];
   document.querySelectorAll('div#content table tr th:nth-child(1)').forEach(function(th) {
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         $referer = $_SERVER["HTTP_REFERER"];
         if ($referer) {
-            $back = lang('Back');
+            $back = Adminer\lang('Back');
             echo '<a href="' . $referer . '">' . $back . '</a>';
         }
         echo "<table cellspacing='0' class='layout'>";
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if ($driver) {
                 $val = $driver->value($val, $field);
             }
-            $val = select_value($val, null, $field, null);
+            $val = Adminer\select_value($val, null, $field, null);
             echo "<tr><th>$key</th><td>$val</td></tr>";
         }
         echo "</table>";
@@ -112,8 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         $check = implode('&', $checks);
-        $token = get_token();
-        $clone = lang('Clone');
+        $token = Adminer\get_token();
+        $clone = Adminer\lang('Clone');
         echo "<p>";
         echo "<form action=\"$referer\" method=\"post\">";
         echo "<input type=\"hidden\" name=\"token\" value=\"$token\">";
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
         echo "</form>";
         echo "</p>";
 
-        page_footer();
+        Adminer\page_footer();
         exit;
     }
 }
