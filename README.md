@@ -43,3 +43,14 @@ function adminer_object() {
 }
 // include original Adminer or Adminer Editor
 include "./adminer.php";
+
+
+# Changelog
+
+## 2.0
+
+- Added support for Adminer 5
+
+## 1.0
+
+- First release
