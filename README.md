@@ -43,6 +43,7 @@ function adminer_object() {
 }
 // include original Adminer or Adminer Editor
 include "./adminer.php";
+```
 
 
 # Changelog
